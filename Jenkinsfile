@@ -25,8 +25,6 @@ pipeline {
             steps {
                 bat 'docker-compose up -d'
                 bat 'ping -n 60 127.0.0.1 > nul'
-
-
             }
         }
         stage('Build & Test') {
@@ -36,10 +34,13 @@ pipeline {
         }
         stage('Publish Extent Reports') {
             steps {
-                publishHTML([
-                    reportDir: 'test-output/ExtentReports',
+                publishHTML(target: [
+                    reportDir: 'test-output/ExtentReports',            // Update if your path differs
                     reportFiles: 'ExtentReport_chrome.html,ExtentReport_firefox.html',
-                    reportName: 'Extent Reports'
+                    reportName: 'Extent Reports',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: false
                 ])
             }
         }
