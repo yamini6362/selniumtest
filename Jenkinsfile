@@ -24,7 +24,8 @@ pipeline {
         stage('Start Selenium Grid') {
             steps {
                 bat 'docker-compose up -d'
-                bat 'timeout /t 15'
+                bat 'timeout /t 15 /nobreak'
+
             }
         }
         stage('Build & Test') {
