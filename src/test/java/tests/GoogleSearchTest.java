@@ -26,6 +26,10 @@ public class GoogleSearchTest {
 
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-dev-shm-usage"); // Important when running inside Docker
+            options.addArguments("--no-sandbox");            // Extra safety
+            options.addArguments("--headless=new");          // Use new headless mode if needed
+
             driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
