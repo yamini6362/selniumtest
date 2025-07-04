@@ -24,7 +24,7 @@ pipeline {
         stage('Start Selenium Grid') {
             steps {
                 bat 'docker-compose up -d'
-                bat 'ping -n 16 127.0.0.1 > nul'
+                bat 'ping -n 60 127.0.0.1 > nul'
 
 
             }
