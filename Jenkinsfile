@@ -35,7 +35,7 @@ pipeline {
         stage('Publish Extent Reports') {
             steps {
                 publishHTML(target: [
-                    reportDir: 'test-output/ExtentReports',            // Update if your path differs
+                    reportDir: 'test-output',            // Update if your path differs
                     reportFiles: 'ExtentReport_chrome.html,ExtentReport_firefox.html',
                     reportName: 'Extent Reports',
                     keepAll: true,
@@ -51,9 +51,9 @@ pipeline {
         }
     }
 
-// post {
-//     always {
-//         cleanWs()
-//     }
+ post {
+     always {
+         cleanWs()
+     }
  }
 
