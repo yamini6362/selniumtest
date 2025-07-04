@@ -1,5 +1,5 @@
 pipeline {
-        agent { label 'gopalam' }
+    agent { label 'gopalam' }
 
     parameters {
         string(name: 'GIT_REPO', defaultValue: 'https://github.com/yamini6362/selniumtest.git', description: 'Git repository URL')
@@ -14,18 +14,22 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: params.BRANCH]], userRemoteConfigs: [[url: params.GIT_REPO]]])
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "*/${params.BRANCH}"]],
+                    userRemoteConfigs: [[url: params.GIT_REPO]]
+                ])
             }
         }
         stage('Start Selenium Grid') {
             steps {
-                sh 'docker-compose up -d'
-                sh 'sleep 15'
+                bat 'docker-compose up -d'
+                bat 'timeout /t 15'
             }
         }
         stage('Build & Test') {
             steps {
-                sh "mvn clean test ${env.MAVEN_OPTS}"
+                bat "mvn clean test %MAVEN_OPTS%"
             }
         }
         stage('Publish Extent Reports') {
@@ -39,7 +43,7 @@ pipeline {
         }
         stage('Stop Selenium Grid') {
             steps {
-                sh 'docker-compose down'
+                bat 'docker-compose down'
             }
         }
     }
