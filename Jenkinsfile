@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+        agent { label 'gopalam' }
 
     parameters {
         string(name: 'GIT_REPO', defaultValue: 'https://github.com/my-org/my-selenium-repo.git', description: 'Git repository URL')
