@@ -2,7 +2,7 @@ pipeline {
         agent { label 'gopalam' }
 
     parameters {
-        string(name: 'GIT_REPO', defaultValue: 'https://github.com/my-org/my-selenium-repo.git', description: 'Git repository URL')
+        string(name: 'GIT_REPO', defaultValue: 'https://github.com/yamini6362/selniumtest.git', description: 'Git repository URL')
         string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to build')
         string(name: 'BROWSERS', defaultValue: 'chrome,firefox', description: 'Comma-separated list of browsers')
     }
