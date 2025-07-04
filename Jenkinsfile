@@ -21,21 +21,24 @@ pipeline {
                 ])
             }
         }
+
         stage('Start Selenium Grid') {
             steps {
                 bat 'docker-compose up -d'
-                bat 'ping -n 60 127.0.0.1 > nul'
+                bat 'ping -n 60 127.0.0.1 > nul' // Wait for grid to start
             }
         }
+
         stage('Build & Test') {
             steps {
                 bat "mvn clean test %MAVEN_OPTS%"
             }
         }
+
         stage('Publish Extent Reports') {
             steps {
                 publishHTML(target: [
-                    reportDir: 'test-output',            // Update if your path differs
+                    reportDir: 'test-output',            // Check your actual path!
                     reportFiles: 'ExtentReport_chrome.html,ExtentReport_firefox.html',
                     reportName: 'Extent Reports',
                     keepAll: true,
@@ -44,6 +47,7 @@ pipeline {
                 ])
             }
         }
+
         stage('Stop Selenium Grid') {
             steps {
                 bat 'docker-compose down'
@@ -51,9 +55,9 @@ pipeline {
         }
     }
 
- post {
-     always {
-         cleanWs()
-     }
- }
-
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
